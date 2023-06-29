@@ -2,14 +2,12 @@ Shader "TestVertexDisplacementShader"
 {
     Properties
     {
-        _Maintex("Texture",2D)="white"{}
+        _MainTex("Texture",2D)="white"{}
         _DisplacementAmount("Displacement Amount",Range(0.0,1.0))=0.1
     }
 
     SubShader
     {
-//        Tags {}
-//        LOD 100
 
         Pass
         {
@@ -31,7 +29,7 @@ Shader "TestVertexDisplacementShader"
             };
 
             sampler2D _MainTex;
-            float4 _DisplacementAmount;
+            float _DisplacementAmount;
 
             v2f vert(appdata v)
             {
