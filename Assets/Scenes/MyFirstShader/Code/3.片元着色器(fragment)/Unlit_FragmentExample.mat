@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Test_VertShaderMaterial
-  m_Shader: {fileID: 4800000, guid: 39560e724d84a9048be82e14c7920d60, type: 3}
+  m_Name: Unlit_FragmentExample
+  m_Shader: {fileID: 4800000, guid: 53e400c3af4c5da48b3e6c91029f98c3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,12 +24,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 342a804b98095df4fb714fc9beed6f9b, type: 3}
-        m_Scale: {x: 3.99, y: 2.06}
-        m_Offset: {x: 0.47, y: 0.33}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _Amplitude: 1
-    - _Speed: 1
+    m_Floats: []
     m_Colors: []
   m_BuildTextureStacks: []
