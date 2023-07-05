@@ -50,12 +50,14 @@ Shader "Unlit/TextPreVertexShader"
                 float3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
                 //获取模型的世界法线
-                float3 objectNormal = normalize(mul(a2v.normal, (float3x3)UNITY_MATRIX_MVP));
+                float3 objectNormal = normalize(mul(a2v.normal, (float3x3)UNITY_MATRIX_MVP));//这里错误使用UNITY_MATRIX_MVP，应该使用unity_ObjectToWorld
 
                 //获取光线方向
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
 
                 //计算漫反射
+                //阴影部分由lightDir,objectNormal控制
+                //LightColor、Diffuse控制Model的着色部分
                 float3 color = _LightColor0.rgb * _Diffuse * saturate(dot(lightDir,objectNormal));
 
                 o.color = fixed4(ambient + color, 1);
