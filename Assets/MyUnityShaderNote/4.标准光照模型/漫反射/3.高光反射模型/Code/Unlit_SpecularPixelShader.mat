@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpecularVertexShader
-  m_Shader: {fileID: 4800000, guid: de7146eff37177c42a2f234650d5aa74, type: 3}
+  m_Name: Unlit_SpecularPixelShader
+  m_Shader: {fileID: 4800000, guid: 3ed93317ff4a60147a2e5fed5d39a4f0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,9 +25,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Gloss: 8
-    - __dirty: 0
+    - _Gloss: 20
     m_Colors:
-    - _Diffuse: {r: 0.83137256, g: 0.18431373, b: 0.18431373, a: 0}
-    - _Specular: {r: 0.85882354, g: 0.6509804, b: 0.16470589, a: 0}
+    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
+    - _Specular: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -6,7 +6,7 @@ Shader "SpecularVertexShader"
 	{
 		_Diffuse("Diffuse", Color) = (0.9150943,0.07338022,0.07338022,0)
 		_Specular("Specular", Color) = (0.7924528,0.5776712,0.04859383,0)
-		_Gloss("Gloss", Range( 8 , 256)) = 20
+		_Gloss("Gloss", Range( 8 , 256)) = 8
 
 	}
 	
@@ -49,6 +49,7 @@ Shader "SpecularVertexShader"
 			#include "UnityShaderVariables.cginc"
 			#include "Lighting.cginc"
 			#include "AutoLight.cginc"
+			#define ASE_NEEDS_VERT_POSITION
 
 
 			struct appdata
@@ -97,9 +98,10 @@ Shader "SpecularVertexShader"
 				float4 appendResult17 = (float4(_Specular.r , _Specular.g , _Specular.b , 0.0));
 				float3 ase_worldViewDir = UnityWorldSpaceViewDir(ase_worldPos);
 				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 normalizeResult44 = normalize( ( ase_worldViewDir - mul( unity_ObjectToWorld, float4( v.vertex.xyz , 0.0 ) ).xyz ) );
 				float3 normalizedWorldNormal = normalize( ase_worldNormal );
 				float3 normalizeResult35 = normalize( reflect( -worldSpaceLightDir , normalizedWorldNormal ) );
-				float dotResult27 = dot( ase_worldViewDir , normalizeResult35 );
+				float dotResult27 = dot( normalizeResult44 , normalizeResult35 );
 				float4 vertexToFrag11 = ( ( UNITY_LIGHTMODEL_AMBIENT + ( ( float4( ase_lightColor.rgb , 0.0 ) * appendResult2 ) * saturate( dotResult6 ) ) ) + ( ( appendResult17 * float4( ase_lightColor.rgb , 0.0 ) ) * pow( saturate( dotResult27 ) , _Gloss ) ) );
 				o.ase_texcoord1 = vertexToFrag11;
 				
@@ -144,7 +146,7 @@ Shader "SpecularVertexShader"
 }
 /*ASEBEGIN
 Version=19105
-Node;AmplifyShaderEditor.CommentaryNode;33;-1744.852,1265.618;Inherit;False;2357.36;1785.759;高光反射;15;35;22;20;24;23;25;31;32;19;18;17;16;29;28;27;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;33;-1744.852,1265.618;Inherit;False;2357.36;1785.759;高光反射;20;35;22;20;24;23;25;31;32;19;18;17;16;29;28;27;38;41;42;44;45;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;13;-580,78.5;Inherit;False;1188;1045;漫反射;6;3;9;10;2;1;8;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;3;-530,609.5;Inherit;False;727;486;Lambert Mode;4;7;6;5;4;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;4;-504,663.5;Inherit;False;False;1;0;FLOAT;0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
@@ -168,14 +170,19 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;4.102051,1535.466;Inherit;False
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;32;377.5066,1868.052;Inherit;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;34;1218.052,1321.072;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.VertexToFragmentNode;11;1580.553,1323.943;Inherit;False;False;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.ViewDirInputsCoordNode;25;-822.853,1970.373;Inherit;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.WorldNormalVector;23;-1664.852,2766.373;Inherit;False;True;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.NegateNode;24;-1425.851,2402.373;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;20;-1721.852,2401.373;Inherit;False;False;1;0;FLOAT;0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.ReflectOpNode;22;-1183.853,2518.373;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.NormalizeNode;35;-855,2517;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;31;-363.8533,2554.373;Inherit;False;Property;_Gloss;Gloss;2;0;Create;True;0;0;0;False;0;False;20;0;8;256;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;31;-363.8533,2554.373;Inherit;False;Property;_Gloss;Gloss;2;0;Create;True;0;0;0;False;0;False;8;0;8;256;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;36;1940.988,988.6018;Float;False;True;-1;2;ASEMaterialInspector;100;5;SpecularVertexShader;0770190933193b94aaa3065e307002fa;True;Unlit;0;0;Unlit;2;False;True;0;1;False;;0;False;;0;1;False;;0;False;;True;0;False;;0;False;;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;RenderType=Opaque=RenderType;True;2;False;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;0;;0;0;Standard;1;Vertex Position,InvertActionOnDeselection;1;0;0;1;True;False;;False;0
+Node;AmplifyShaderEditor.NormalizeNode;35;-855,2518.587;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.PosVertexDataNode;41;-1724.066,2082.086;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;42;-1460.066,2014.086;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.ObjectToWorldMatrixNode;38;-1720.776,1890.267;Inherit;False;0;1;FLOAT4x4;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;45;-1152.841,1882.905;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.NormalizeNode;44;-871.1904,1882.348;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.ViewDirInputsCoordNode;25;-1472.853,1638.373;Inherit;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 WireConnection;6;0;4;0
 WireConnection;6;1;5;0
 WireConnection;9;0;8;1
@@ -188,7 +195,7 @@ WireConnection;2;1;1;2
 WireConnection;2;2;1;3
 WireConnection;15;0;14;0
 WireConnection;15;1;10;0
-WireConnection;27;0;25;0
+WireConnection;27;0;44;0
 WireConnection;27;1;35;0
 WireConnection;28;0;27;0
 WireConnection;29;0;28;0
@@ -206,7 +213,12 @@ WireConnection;11;0;34;0
 WireConnection;24;0;20;0
 WireConnection;22;0;24;0
 WireConnection;22;1;23;0
-WireConnection;35;0;22;0
 WireConnection;36;0;11;0
+WireConnection;35;0;22;0
+WireConnection;42;0;38;0
+WireConnection;42;1;41;0
+WireConnection;45;0;25;0
+WireConnection;45;1;42;0
+WireConnection;44;0;45;0
 ASEEND*/
-//CHKSM=BFFE3510A939BC2717419BF89040632FE0043376
+//CHKSM=F115335862E24354294EF434E949DDC06CE63432
