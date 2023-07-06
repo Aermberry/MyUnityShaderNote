@@ -19,7 +19,7 @@ Shader "Unlit/PrePixelHalfLambert"
 
             Tags
             {
-                "LightModel"="ForwardBase"
+                "LightMode"="ForwardBase"
             }
 
             CGPROGRAM
@@ -51,7 +51,7 @@ Shader "Unlit/PrePixelHalfLambert"
                 v2f.vertex = UnityObjectToClipPos(appdata.vertex);
 
                 //获取Model的法线，并将物体坐标空间转为世界坐标空间
-                v2f.normal = mul(appdata.normal, (float3x3)unity_ObjectToWorld);
+                v2f.normal = mul(appdata.normal, (float3x3)unity_WorldToObject);
 
                 return v2f;
             }
