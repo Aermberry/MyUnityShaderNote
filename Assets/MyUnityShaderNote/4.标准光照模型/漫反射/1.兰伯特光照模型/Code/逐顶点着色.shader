@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Bilnn-Phong/DiffusePixelLevel"
+Shader "Bilnn-Phong/DiffuseVertexLevel"
 {
     Properties
     {
@@ -8,17 +8,16 @@ Shader "Bilnn-Phong/DiffusePixelLevel"
     }
     SubShader
     {
-
+       
         LOD 100
 
         Pass
         {
-
-            Tags
-            {
-                "LightModel"="ForwardBase"
-            }
-
+             Tags
+        {
+            "LightMode"="ForwardBase"
+        }
+            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -36,8 +35,8 @@ Shader "Bilnn-Phong/DiffusePixelLevel"
 
             struct v2f
             {
+                fixed3 color: COLOR;
                 float4 vertex : SV_POSITION;
-                float3 worldNormal : NORMAL;
             };
 
 
@@ -47,28 +46,29 @@ Shader "Bilnn-Phong/DiffusePixelLevel"
 
                 //把顶点的坐标空间从模型空间转换为剪裁空间
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldNormal = mul(v.normal, (float3x3)unity_WorldToObject);
+
+                //获取环境光
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+
+                //获取顶点的法线并从当前的模型坐标空间转换为与光源一致的世界坐标空间
+                fixed3 worldNormal = normalize(mul(v.normal, (float3x3)unity_WorldToObject));
+
+                //获取光源的方向并由模型坐标空间转换为世界坐标空间
+                fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
+
+                //计算漫反射
+                fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldLight, worldNormal));
+
+                o.color.rgb = ambient + diffuse;
+
                 return o;
             }
 
             fixed4 frag(v2f i) : SV_Target
             {
-                //获取环境光
-                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+                fixed4 color = fixed4(i.color, 1.0);
 
-                //获取顶点的法线并从当前的模型坐标空间转换为与光源一致的世界坐标空间
-                fixed3 worldNormal = normalize(i.worldNormal);
-
-                //获取光源的方向并由模型坐标空间转换为世界坐标空间
-                fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
-
-
-                //计算漫反射
-                fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldLight, worldNormal));
-
-                fixed3 color = ambient + diffuse;
-
-                return fixed4(color, 1.0);
+                return color;
             }
             ENDCG
         }
