@@ -96,9 +96,7 @@ Shader "SpecularVertexShader"
 				float3 ase_worldNormal = UnityObjectToWorldNormal(v.ase_normal);
 				float dotResult6 = dot( worldSpaceLightDir , ase_worldNormal );
 				float4 appendResult17 = (float4(_Specular.r , _Specular.g , _Specular.b , 0.0));
-				float3 ase_worldViewDir = UnityWorldSpaceViewDir(ase_worldPos);
-				ase_worldViewDir = normalize(ase_worldViewDir);
-				float3 normalizeResult44 = normalize( ( ase_worldViewDir - mul( unity_ObjectToWorld, float4( v.vertex.xyz , 0.0 ) ).xyz ) );
+				float3 normalizeResult44 = normalize( ( _WorldSpaceCameraPos - mul( unity_ObjectToWorld, float4( v.vertex.xyz , 0.0 ) ).xyz ) );
 				float3 normalizedWorldNormal = normalize( ase_worldNormal );
 				float3 normalizeResult35 = normalize( reflect( -worldSpaceLightDir , normalizedWorldNormal ) );
 				float dotResult27 = dot( normalizeResult44 , normalizeResult35 );
@@ -146,7 +144,7 @@ Shader "SpecularVertexShader"
 }
 /*ASEBEGIN
 Version=19105
-Node;AmplifyShaderEditor.CommentaryNode;33;-1744.852,1265.618;Inherit;False;2357.36;1785.759;高光反射;20;35;22;20;24;23;25;31;32;19;18;17;16;29;28;27;38;41;42;44;45;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;33;-1744.852,1265.618;Inherit;False;2357.36;1785.759;高光反射;20;35;22;20;24;23;31;32;19;18;17;16;29;28;27;38;41;42;44;45;46;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;13;-580,78.5;Inherit;False;1188;1045;漫反射;6;3;9;10;2;1;8;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;3;-530,609.5;Inherit;False;727;486;Lambert Mode;4;7;6;5;4;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.WorldSpaceLightDirHlpNode;4;-504,663.5;Inherit;False;False;1;0;FLOAT;0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
@@ -182,7 +180,7 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;42;-1460.066,2014.086;Inherit;Fals
 Node;AmplifyShaderEditor.ObjectToWorldMatrixNode;38;-1720.776,1890.267;Inherit;False;0;1;FLOAT4x4;0
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;45;-1152.841,1882.905;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.NormalizeNode;44;-871.1904,1882.348;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.ViewDirInputsCoordNode;25;-1472.853,1638.373;Inherit;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.WorldSpaceCameraPos;46;-1560.305,1655.43;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 WireConnection;6;0;4;0
 WireConnection;6;1;5;0
 WireConnection;9;0;8;1
@@ -217,8 +215,8 @@ WireConnection;36;0;11;0
 WireConnection;35;0;22;0
 WireConnection;42;0;38;0
 WireConnection;42;1;41;0
-WireConnection;45;0;25;0
+WireConnection;45;0;46;0
 WireConnection;45;1;42;0
 WireConnection;44;0;45;0
 ASEEND*/
-//CHKSM=F115335862E24354294EF434E949DDC06CE63432
+//CHKSM=46F851B3B1AA47CF36558F38CCF021763C94D974
