@@ -42,7 +42,7 @@ Shader "Unlit/Blinn_Phong_Pre_Pxiel_Shadaer"
             {
                 float4 vertex : SV_POSITION;
                 fixed3 worldNormal:TEXCOORD0;
-                fixed3 worldVertex:TEXCOORD1;
+                fixed3 worldVertexPosition:TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -54,7 +54,7 @@ Shader "Unlit/Blinn_Phong_Pre_Pxiel_Shadaer"
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
-                o.worldVertex= mul(unity_ObjectToWorld, v.vertex);
+                o.worldVertexPosition= mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
 
@@ -67,18 +67,18 @@ Shader "Unlit/Blinn_Phong_Pre_Pxiel_Shadaer"
                 //获取Model的法线，将物体坐标转换为世界坐标
                 fixed3 worldNormal = normalize(i.worldNormal);
                 //获取光源的方向，将物体坐标转换为世界坐标
-                fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldVertex));
+                fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldVertexPosition));
                 //计算Lambert
                 fixed3 lambert = saturate(dot(worldLightDir, worldNormal));
                 fixed3 diffuseColor = _LightColor0.rgb * _Diffuse.rgb * lambert;
 
                 //高光反射
                 //获取视口方向，将物体坐标转换为世界坐标
-                fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldVertex));                                                                                                                                                                                                                                                                 
+                fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldVertexPosition));                                                                                                                                                                                                                                                                 
                 //half direction
                 fixed3 halfDir=normalize(worldViewDir+worldLightDir) ;
                 //高光计算
-                fixed3 specular=pow(saturate(dot(worldNormal,halfDir)),_Gloss);
+                fixed3 specular=pow(max(0,dot(worldNormal,halfDir)),_Gloss);
                 fixed3 specularColor = _LightColor0.rgb * _Specular.rgb * specular;
 
                 fixed4 color = fixed4(ambient + diffuseColor + specularColor, 1);

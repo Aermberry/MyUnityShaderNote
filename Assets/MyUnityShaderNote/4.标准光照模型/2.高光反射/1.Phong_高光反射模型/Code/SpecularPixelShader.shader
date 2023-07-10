@@ -39,7 +39,7 @@ Shader "Unlit/SpecularPixelShader"
             {
                 float4 vertex :SV_POSITION;
                 fixed3 worldNormal :TEXCOORD0;
-                fixed3 worldVertex :TEXCOORD1;
+                fixed3 worldVertexPosition :TEXCOORD1;
             };
 
             fixed3 _Diffuse;
@@ -52,7 +52,7 @@ Shader "Unlit/SpecularPixelShader"
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.worldNormal = normalize(mul(v.normal, (float3x3)unity_WorldToObject));
-                o.worldVertex = mul(unity_ObjectToWorld, v.vertex);
+                o.worldVertexPosition = mul(unity_ObjectToWorld, v.vertex);
 
                 return o;
             }
@@ -74,9 +74,9 @@ Shader "Unlit/SpecularPixelShader"
 
                 fixed3 reflectDir = normalize(reflect(-_WorldSpaceLightPos0.xyz, i.worldNormal));
                 //视角
-                fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldVertex.xyz);
+                fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldVertexPosition.xyz);
                 //Specular Mode
-                fixed3 specular = pow(saturate(dot(reflectDir, viewDir)), _Gloss);
+                fixed3 specular = pow(max(0,dot(reflectDir, viewDir)), _Gloss);
                 fixed3 specularColor = _LightColor0.rgb * _Specular.rgb * specular;
 
 
