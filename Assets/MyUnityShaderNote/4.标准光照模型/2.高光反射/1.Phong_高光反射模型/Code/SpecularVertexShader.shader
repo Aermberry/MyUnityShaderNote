@@ -79,7 +79,7 @@ Shader "Unlit/SpeccularVertexShader"
                 //_Gloss控制高光的区域的大小
                 //pow(x,y) 指数幂函数,x：底数,y:指数
                 fixed3 specular = pow(
-                    saturate(dot(reflectDir, viewDirection)), _Gloss);
+                    max(0,dot(reflectDir, viewDirection)), _Gloss);
                 fixed3 specularColor = _LightColor0.rgb * _Specular.rgb * specular;
 
                 fixed4 color = fixed4(ambient + diffuseColor+specularColor , 1);
