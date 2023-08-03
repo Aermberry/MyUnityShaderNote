@@ -6,8 +6,8 @@ Shader "SingleTextureShader"
 	{
 		_ColorTint("Color Tint", Color) = (0.9339623,0.4537647,0.4537647,0)
 		_Specular("Specular", Color) = (1,1,1,0)
-		_MainTex("MainTex", 2D) = "white" {}
 		_Gloss("Gloss", Range( 0 , 256)) = 20
+		_MainTex("MainTex", 2D) = "white" {}
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
@@ -175,9 +175,9 @@ Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-316.641,-1234.389;Inherit;Fals
 Node;AmplifyShaderEditor.ColorNode;1;-968.0881,-1072.37;Inherit;False;Property;_ColorTint;Color Tint;0;0;Create;True;0;0;0;False;0;False;0.9339623,0.4537647,0.4537647,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.DynamicAppendNode;2;-666.5505,-1042.216;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.DynamicAppendNode;25;-674.6528,-1461.811;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SamplerNode;3;-1052.91,-1491.244;Inherit;True;Property;_MainTex;MainTex;2;0;Create;True;0;0;0;False;0;False;-1;cd7ff12dda87f794593c2063d4a5f0b3;cd7ff12dda87f794593c2063d4a5f0b3;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TextureCoordinatesNode;59;-1414.985,-1468.681;Inherit;True;0;3;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;3;-1052.91,-1491.244;Inherit;True;Property;_MainTex;MainTex;3;0;Create;True;0;0;0;False;0;False;-1;cd7ff12dda87f794593c2063d4a5f0b3;cd7ff12dda87f794593c2063d4a5f0b3;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.LightColorNode;32;-314.9419,-817.8019;Inherit;False;0;3;COLOR;0;FLOAT3;1;FLOAT;2
+Node;AmplifyShaderEditor.TextureCoordinatesNode;59;-1414.985,-1469.681;Inherit;True;0;3;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 WireConnection;33;0;28;0
 WireConnection;33;1;32;1
 WireConnection;36;0;29;0
@@ -217,4 +217,4 @@ WireConnection;25;1;3;2
 WireConnection;25;2;3;3
 WireConnection;3;1;59;0
 ASEEND*/
-//CHKSM=BBE07B40F89395FFF221A5C9A3F20755EDF2A072
+//CHKSM=DA11164E57C989AA98060D4BA1405AAE48726B16
